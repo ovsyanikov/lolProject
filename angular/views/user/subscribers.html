@@ -1,0 +1,23 @@
+<div  ng-controller="profileController">
+
+    <h3>Подписчики</h3>
+    <h3 ng-if="subscribers.status == 'empty'">Подписчики не найдены</h3>
+
+    <div ng-if="subscribers.status != 'empty'">
+
+        <div style="background-color: white; padding: 30px;" ng-repeat="subscriber in subscribers.users" >
+
+                <a ui-sref="user({'login': subscriber.login})">
+
+                    <img style="border-radius: 50%" src="{{subscriber.image}}" alt="">
+
+                </a>
+                <h3 style="    display: inline-block; width: 65%; padding: 4%;" ng-bind-template="{{subscriber.firstName}} {{subscriber.lastName}}"></h3>
+                <button ng-show="NotConfirm" ng-click="ConfirmFriendRequest(subscriber.login)" style="width: 100%; height: 30px; margin-top: 2%; border-radius: 36px; background-color: rgba(162, 162, 162, 0.49);">Принять заявку</button>
+
+        </div>
+
+
+    </div>
+
+</div>

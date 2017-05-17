@@ -1,0 +1,396 @@
+<div class="col-xs-12 col-md-8"><!-- Левая основная колонка -->
+    <div class="cont-lenta all-lenta">
+        <div class="row">
+            <div ng-if="isUserInfoShow" class="col-xs-12">
+                <div class="comment-block top-add">
+                    <div class="add-comment">
+                        <div class="item-ava">
+                            <figure><a ui-sref="user({login: user.login})"><img ng-src="{{user.image}}"></a></figure>
+                        </div>
+                        <div class="item-text textar">
+                            <textarea ng-model="news.content" ng-change="contentChange(news.content)" placeholder="Что у вас нового?"></textarea>
+                            <div class="panel-textar">
+                                <div class="pan-icon">
+                                    <a href="javascript:void(0)" class="photo">
+
+                                        <div class="add-photo">
+
+                                            <span class="icon-camera-1"></span>
+                                            <input type="file" name="newsPhotos" multiple="multiple" id="newsPhotos" value="" />
+                                            <div class="news-photo">
+
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+                                </div>
+                                <div class="pan-buton">
+                                    <button ng-click="AddUserNews(tape)">Отправить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script ng-if="isUserInfoShow" >
+                    $('.textar textarea').click(function(){
+                        $(this).parent().addClass('open');
+
+                    });
+                </script>
+
+            </div>
+
+            <div ng-repeat="singleTapePost in newPosts | orderBy: '-' " class="block-lenta col-xs-12">
+
+                <div class="box">
+                    <header>
+                        <ul>
+                            <li class="user-i">
+                                <figure><a ui-sref="user({login: singleTapePost.owner.login})"><img ng-src="{{singleTapePost.owner.image}}"></a></figure>
+                            </li>
+                            <li class="user-t"><a href="#" ng-bind-template="{{singleTapePost.owner.firstName}} {{singleTapePost.owner.lastName}}" ></a>
+                                <div ng-if="singleTapePost.time.days == 0 && singleTapePost.time.hours == 0 && singleTapePost.time.minutes > 0" class="date" ng-bind-template="{{singleTapePost.time.minutes}} минут назад"></div>
+                                <div ng-if="singleTapePost.time.days == 0 && singleTapePost.time.hours > 0" class="date" ng-bind-template="{{singleTapePost.time.hours}} часов назад"></div>
+                                <div ng-if="singleTapePost.time.days == 0 && singleTapePost.time.hours == 0 && singleTapePost.time.minutes == 0" class="date">Только что</div>
+                                <div ng-if="singleTapePost.time.days > 0" class="date" ng-bind="singleTapePost.date"></div>
+                            </li>
+                        </ul>
+                        <div class="ellipsis"> <span class="icon-ellipsis"></span>
+                            <div class="ellipsis-panel">
+                                <div class="vlo-elipsis"><a href="#" class="subscribe"><span>Подписаться</span></a> <a href="#" class="complain"><span>Пожаловаться</span></a></div>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="lenta-t">
+
+                        <div class="anons" ng-bind="singleTapePost.description | descriptionFilter:singleTapePost.contentStrict"></div>
+                        <div class="more-description" ng-click="singleTapePost.contentStrict =  singleTapePost.description.length" ng-if="singleTapePost.description.length > singleTapePost.contentStrict">Показать полностью...</div>
+
+                        <div class="pr-img">
+                            <figure><a href="#"><img ng-src="{{singleTapePost.newsPhotos[0].middleUrl}}"></a></figure>
+                        </div>
+                    </div>
+                    <footer class="row news-f">
+                        <div class="social-ic col-xs">
+                            <a ng-class="singleTapePost.likeActive ? 'active-like' : 'laik'" ng-click="addLike(singleTapePost)" href="#" class="laik">
+                                <span class="laik-i icon-heart">
+                                    <span class="ts">Нравится</span>
+                                </span>
+                                <span  ng-bind="singleTapePost.likes" class="count"></span>
+                            </a>
+
+                            <a href="#" class="comment">
+                                <span class="comment-i icon-comment">
+                                    <span class="ts">Коментировать</span>
+                                </span>
+                                <span ng-bind="singleTapePost.comments.allCount" class="count"></span>
+                            </a>
+
+                            <a href="#" class="repost">
+                                <span class="repost-i icon-forward">
+                                    <span class="ts">Поделиться</span>
+                                </span>
+                                <span ng-bind="singleTapePost.reposts" class="count"></span>
+                            </a>
+
+                        </div>
+                    </footer>
+
+                    <div ng-if="singleTapePost.newsPhotos.length > 1" >
+
+                        <div class="owl-carousel owl-theme">
+                            <div ng-repeat="singlePhoto in singleTapePost.newsPhotos " >
+                                <img ng-src="{{singlePhoto.smallUrl}}">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="comment-block">
+                        <div ng-if="singleTapePost.comments.allCount > singleTapePost.comments.posts.length" ng-click="moreComments(singleTapePost)"  class="see-all-comments" ng-bind-template="Показать последние {{singleTapePost.comments.allCount - commentsCount}} комментариев"></div>
+
+                        <div ng-repeat="comment in singleTapePost.comments.posts" class="item-comemment">
+                            <div class="item-ava">
+                                <figure><a ui-sref="user({login: comment.login})"><img ng-src="{{comment.avatar}}"></a></figure>
+                            </div>
+                            <div class="item-text">
+                                <div class="user-t"><a href="#" ng-bind-template="{{comment.firstName}} {{comment.lastName}}"></a>
+                                    <div class="i-cans"><a href="#"><span class="icon-cancel"></span></a></div>
+                                </div>
+                                <div class="it-text" ng-bind="comment.text"></div>
+                                <div class="date">
+                                    <!--<div>20 минут назад <a href="#" class="otv">Ответить</a></div>-->
+                                    <div ng-if="comment.time.days == 0 && comment.time.hours == 0 && comment.time.minutes > 0" ng-bind-template="{{comment.time.minutes}} минут назад"></div>
+                                    <div ng-if="comment.time.days == 0 && comment.time.hours > 0" ng-bind-template="{{comment.time.hours}} часов назад"></div>
+                                    <div ng-if="comment.time.days == 0 && comment.time.hours == 0 && comment.time.minutes == 0">Только что</div>
+                                    <div ng-if="comment.time.days > 0"  ng-bind="comment.time.date"></div>
+
+                                    <div class="i-heart">
+                                        <a  ng-class="comment.likeActive ? 'active-like' : 'laik'" ng-click="addLike(comment,true)" href="#">
+                                            <span class="icon-heart"></span>
+                                        </a>
+                                        <span ng-bind="comment.likesCount" class="count"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-if="isUserInfoShow" class="add-comment">
+                            <div class="item-ava">
+                                <figure><a href="#"><img ng-src="{{user.image}}"></a></figure>
+                            </div>
+                            <div class="item-text textar">
+                                <textarea ng-model="message" ng-change="msgChange(message)" placeholder="Ваш комментарий"></textarea>
+                                <div class="panel-textar">
+                                    <div class="pan-icon"><a href="javascript:void(0);" class="photo"><span class="icon-camera-1"></span></a></div>
+                                    <div class="pan-buton">
+                                        <button ng-click="addComment(singleTapePost.id,singleTapePost.comments.posts)">Отправить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <script ng-if="$index == tape.length-1 && isUserInfoShow" >
+
+                    $('.textar textarea').click(function(){
+                        $(this).parent().addClass('open');
+
+                    });
+                </script>
+
+                <div  ng-include="includeOwlScripts($index ,newPosts.length,singleTapePost.id)">
+
+                </div>
+
+            </div>
+
+            <div ng-repeat="singleTapePost in tape track by $index" class="block-lenta col-xs-12">
+
+                <div class="box">
+                    <header>
+                        <ul>
+                            <li class="user-i">
+                                <figure><a ui-sref="user({login: singleTapePost.owner.login})"><img ng-src="{{singleTapePost.owner.image}}"></a></figure>
+                            </li>
+                            <li class="user-t"><a href="#" ng-bind-template="{{singleTapePost.owner.firstName}} {{singleTapePost.owner.lastName}}" ></a>
+                                <div ng-if="singleTapePost.time.days == 0 && singleTapePost.time.hours == 0 && singleTapePost.time.minutes > 0" class="date" ng-bind-template="{{singleTapePost.time.minutes}} минут назад"></div>
+                                <div ng-if="singleTapePost.time.days == 0 && singleTapePost.time.hours > 0" class="date" ng-bind-template="{{singleTapePost.time.hours}} часов назад"></div>
+                                <div ng-if="singleTapePost.time.days == 0 && singleTapePost.time.hours == 0 && singleTapePost.time.minutes == 0" class="date">Только что</div>
+                                <div ng-if="singleTapePost.time.days > 0" class="date" ng-bind="singleTapePost.date"></div>
+                            </li>
+                        </ul>
+                        <div class="ellipsis"> <span class="icon-ellipsis"></span>
+                            <div class="ellipsis-panel">
+                                <div class="vlo-elipsis"><a href="#" class="subscribe"><span>Подписаться</span></a> <a href="#" class="complain"><span>Пожаловаться</span></a></div>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="lenta-t">
+
+                        <div class="anons" ng-bind="singleTapePost.description | descriptionFilter:singleTapePost.contentStrict"></div>
+                        <div class="more-description" ng-click="singleTapePost.contentStrict =  singleTapePost.description.length" ng-if="singleTapePost.description.length > singleTapePost.contentStrict">Показать полностью...</div>
+
+                        <div class="pr-img">
+                            <figure><a href="#"><img ng-src="{{singleTapePost.newsPhotos[0].middleUrl}}"></a></figure>
+                        </div>
+                    </div>
+                    <footer class="row news-f">
+                        <div class="social-ic col-xs">
+                            <a ng-class="singleTapePost.likeActive ? 'active-like' : 'laik'" ng-click="addLike(singleTapePost)" href="#" class="laik">
+                                <span class="laik-i icon-heart">
+                                    <span class="ts">Нравится</span>
+                                </span>
+                                <span  ng-bind="singleTapePost.likes" class="count"></span>
+                            </a>
+
+                            <a href="#" class="comment">
+                                <span class="comment-i icon-comment">
+                                    <span class="ts">Коментировать</span>
+                                </span>
+                                <span ng-bind="singleTapePost.comments.allCount" class="count"></span>
+                            </a>
+
+                            <a href="#" class="repost">
+                                <span class="repost-i icon-forward">
+                                    <span class="ts">Поделиться</span>
+                                </span>
+                                <span ng-bind="singleTapePost.reposts" class="count"></span>
+                            </a>
+
+                        </div>
+                    </footer>
+
+                    <div ng-if="singleTapePost.newsPhotos.length > 1" >
+
+                        <div class="owl-carousel owl-theme">
+                            <div ng-repeat="singlePhoto in singleTapePost.newsPhotos " >
+                                <img ng-src="{{singlePhoto.smallUrl}}">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="comment-block">
+                        <div ng-if="singleTapePost.comments.allCount > singleTapePost.comments.posts.length" ng-click="moreComments(singleTapePost)"  class="see-all-comments" ng-bind-template="Показать последние {{singleTapePost.comments.allCount - commentsCount}} комментариев"></div>
+
+                        <div ng-repeat="comment in singleTapePost.comments.posts" class="item-comemment">
+                            <div class="item-ava">
+                                <figure><a ui-sref="user({login: comment.login})"><img ng-src="{{comment.avatar}}"></a></figure>
+                            </div>
+                            <div class="item-text">
+                                <div class="user-t"><a href="#" ng-bind-template="{{comment.firstName}} {{comment.lastName}}"></a>
+                                    <div class="i-cans"><a href="#"><span class="icon-cancel"></span></a></div>
+                                </div>
+                                <div class="it-text" ng-bind="comment.text"></div>
+                                <div class="date">
+                                    <!--<div>20 минут назад <a href="#" class="otv">Ответить</a></div>-->
+                                    <div ng-if="comment.time.days == 0 && comment.time.hours == 0 && comment.time.minutes > 0" ng-bind-template="{{comment.time.minutes}} минут назад"></div>
+                                    <div ng-if="comment.time.days == 0 && comment.time.hours > 0" ng-bind-template="{{comment.time.hours}} часов назад"></div>
+                                    <div ng-if="comment.time.days == 0 && comment.time.hours == 0 && comment.time.minutes == 0">Только что</div>
+                                    <div ng-if="comment.time.days > 0"  ng-bind="comment.time.date"></div>
+
+                                    <div class="i-heart">
+                                        <a  ng-class="comment.likeActive ? 'active-like' : 'laik'" ng-click="addLike(comment,true)" href="#">
+                                            <span class="icon-heart"></span>
+                                        </a>
+                                        <span ng-bind="comment.likesCount" class="count"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-if="isUserInfoShow" class="add-comment">
+                            <div class="item-ava">
+                                <figure><a href="#"><img ng-src="{{user.image}}"></a></figure>
+                            </div>
+                            <div class="item-text textar">
+                                <textarea ng-model="message" ng-change="msgChange(message)" placeholder="Ваш комментарий"></textarea>
+                                <div class="panel-textar">
+                                    <div class="pan-icon"><a href="javascript:void(0);" class="photo"><span class="icon-camera-1"></span></a></div>
+                                    <div class="pan-buton">
+                                        <button ng-click="addComment(singleTapePost.id,singleTapePost.comments.posts)">Отправить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <script ng-if="$index == tape.length-1 && isUserInfoShow" >
+
+                    $('.textar textarea').click(function(){
+                        $(this).parent().addClass('open');
+
+                    });
+                </script>
+
+                <div ng-if="$index == tape.length-1">
+
+                    <div  ng-include="includeOwlScripts($index ,tape.length,singleTapePost.id)">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        </div>
+        <div ng-if="nowPosts > 0" class="add-more-post">
+            <button ng-click="moreNews()">
+                <span class="icon-spin3 animate-spin"><!--Леша у этого спана два класса .animate-spin вращаеи его))) --></span>
+                <span class="t-m-post">Загрузить ещё</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<aside class="col-xs-12 col-md-3 col-md-offset-1">
+
+    <!--Панель в правой колонке -->
+    <div ng-if="isUserInfoShow" class="panel-right">
+        <div class="panel-in">
+            <div class="block-r cab-meny">
+                <header class="row zr middle-xs">
+                    <div class="head col-xs">
+                        <div class="v-line"></div>
+                        <h2>Кабинет</h2>
+                    </div>
+                </header>
+                <div class="cont-right-bl meny-r">
+                    <ul>
+                        <li><a UI-SREF="home" href="#"><span class="icon-home">Моя страница</span></a></li>
+                        <li><a href="#" class="active"><span class="icon-news">Лента новостей</span></a>
+                            <ul class="active">
+                                <li><a href="#" class="active"><span>Моя лента</span></a></li>
+                                <li><a href="#"><span>Вся лента</span></a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#"><span class="icon-heart">Мне понравилось</span></a></li>
+                        <li><a href="#"><span class="icon-chat">Сообщения</span></a></li>
+                        <li><a href="#"><span class="icon-user">Друзья</span></a></li>
+                        <li><a href="#"><span class="icon-camera-1">Фотографии</span></a></li>
+                        <li><a href="#"><span class="icon-videocam">Видео</span></a></li>
+                        <li><a href="#"><span class="icon-videocam">Фотографии</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--конец панель в правой колонке -->
+
+    <div class="right">
+        <div class="row">
+            <!--Блок в правой колонке -->
+            <div class="block-r col-xs">
+                <header class="row zr middle-xs">
+                    <div class="head col-xs">
+                        <div class="v-line"></div>
+                        <h2>3d Анадырь</h2>
+                    </div>
+                </header>
+                <div class="cont-right-bl">
+                    <figure><a href="http://3danadyr.ru/3/_html5/3.html" target="_blank" class="rekl-link"><img src="img/sidebar3.jpg"></a></figure>
+                </div>
+            </div>
+            <!--конец Блок в правой колонке -->
+            <!--Блок в правой колонке -->
+            <div class="block-r col-xs">
+                <header class="row zr middle-xs">
+                    <div class="head col-xs">
+                        <div class="v-line"></div>
+                        <h2>Авиабилеты</h2>
+                    </div>
+                </header>
+                <div class="cont-right-bl">
+                    <figure><a href="#" class="rekl-link"><img src="img/r1.jpg"></a></figure>
+                </div>
+            </div>
+            <!--конец Блок в правой колонке -->
+            <!--Блок в правой колонке -->
+            <div class="block-r col-xs">
+                <header class="row zr middle-xs">
+                    <div class="head col-xs">
+                        <div class="v-line"></div>
+                        <h2>Афиша</h2>
+                    </div>
+                </header>
+                <div class="cont-right-bl">
+                    <figure><a href="#" class="rekl-link"><img src="img/affors.jpg"></a></figure>
+                </div>
+            </div>
+            <!--конец Блок в правой колонке -->
+        </div>
+    </div>
+</aside>
+

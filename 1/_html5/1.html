@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
+  <title>Анадырь</title>
+  <link rel="stylesheet" type="text/css" href="../../style3d/st3d.css">
+  <style type="text/css">
+@-ms-viewport {
+width: device-width;
+}
+html body {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	-ms-touch-action: none;
+}
+img {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.tipText {
+	font-family: Arial;
+	font-weight: bold;
+	font-size: 16px;
+	text-shadow: 1px 1px 3.2px rgba(0,0,0,1);
+	color: #FFFFFF;
+	text-align: center;
+}
+</style>
+  <script type="text/javascript">
+ var so =  { 
+ lwImg: "resources/1_loading.gif", 
+ lwBgColor: "0,255,255,255", 
+ lwBarBgColor: "255,255,255,255", 
+ lwBarColor: "255,255,255,255", 
+ lwBarBounds: "0,0,0,0", 
+ lwlocation: "4", 
+ lwShowLoadingPercent: "true", 
+ lwTextColor: "0,0,0,0", 
+ iniFile: "config.js", 
+ progressType: "0" 
+  } 
+  </script>
+  </head>
+  <body>
+</body>
+ <div class="hed-pan">
+	<div class="cont-meny">
+		<button id="btn-my-meny" class="color1" onclick="javascript:spoiler('spoil2')"><span></span><span></span><span></span></button>
+	</div>
+	<div class="zag">
+		<h1>Анадырь, ул. Ленина &#151; ул. Рультытегина</h1>
+	</div>
+</div>
+ 
+  <!-- Сама выпадашка -->
+ <div id="spoil2" class="my-meny">
+	<div class="foinput">
+		<input id="streetName" oninput="inputStreet(this)" class="my-input" type="text" placeholder="Введите улицу или организацию">
+
+		<input style="display: none" oninput="changeHouse(this)"  id="houseName" class="my-input"  type="text" placeholder="Введите номер дома">
+		<!-- появляется после выбора улицы (пока просто закоментил)))
+
+		-->
+		<input style="display: none"  id="goToPoint" class="my-input"  type="button" value="Перейти к точке">
+		<!-- Появляется как подсказка при вводе улицы... сейчас убрано с помощью display: none; -->
+		<ul id="resultList" class="vlo">
+			<!--id="resultList"-->
+			<!--<li>Отке</li>-->
+			<!--<li>Супермаркет Новомариинский</li>-->
+			<!--<li>Кинотеатр Полярный</li>-->
+			<!--<li>Чукотская библиотека</li>-->
+			<!--<li>Отке</li>-->
+			<!--<li>Супермаркет Новомариинский</li>-->
+			<!--<li>Кинотеатр Полярный</li>-->
+			<!--<li>Чукотская библиотека</li>-->
+			<!--<li>Отке</li>-->
+			<!--<li>Супермаркет Новомариинский</li>-->
+			<!--<li>Кинотеатр Полярный</li>-->
+			<!--<li>Чукотская библиотека</li>-->
+		</ul>
+	</div>
+	
+	<div class="link-st">
+		<ul>
+			<li><a href="#">Памятник Рытхэу</a></li>
+			<li><a href="#">Музей</a></li>
+			<li><a href="#">Храм</a></li>
+			<li><a href="#">Отель Чукотка</a></li>
+		</ul>
+	</div>
+	
+</div>
+  
+  <script language="javascript" src="javascript/load.js"></script>
+  <!-- Мой скрипт -->
+  <script type="text/javascript">
+    function spoiler(id) {
+        if(document.getElementById(id).className == "my-meny"){
+            document.getElementById(id).className = "activet";
+ 
+        } else {
+            document.getElementById(id).className = "my-meny";
+        }
+    }
+
+</script>
+
+<!--ПЕРЕНОСИ ЭТО-->
+<script>
+	var points = [];
+	var byStreetArray = [];
+
+	document.body.onload = function () {
+
+		var request = new XMLHttpRequest();
+		var fd = new FormData();
+		fd.append("action", 'getPoints');
+
+		request.open("POST", 'http://3danadyr.ru/admin/wordpress/wp-admin/admin-ajax.php', true);
+
+		request.onreadystatechange = function () {
+
+			if(request.statusText == 'OK'){
+
+				points = JSON.parse(request.responseText);
+				console.log('points',points);
+
+			}
+
+//			console.log(request.statusText);
+//			console.log(request.responseText);
+
+		}//request
+
+		request.send(fd);
+	}
+
+	var street = '';
+	var hNumber = '';
+	var housesByStreet = [];
+	var housesByStreetList = [];
+
+	var containAddresses = false;
+	var currentAddress = {'path' : '', 'title' : ''};
+
+	var current = null;
+
+	function clear(element) {
+		while(element.firstChild){
+			element.removeChild( element.firstChild );
+		}
+
+	}
+
+	function inputStreet(inputElem) {
+
+		byStreetArray.length = 0;
+		var strString = new String(inputElem.value).toLowerCase().trim();
+
+		console.log('strString',strString);
+
+		if(strString.length == 0){
+			while(resultList.firstChild){
+				resultList.removeChild(resultList.firstChild);
+			}
+			return;
+		}
+
+
+		for(var i = 0; i < points.length ; i++){
+
+			for(var j = 0; j < points[i].length ; j++){
+
+				var currentTaxName = new String(points[i][j].pTax.name).toLowerCase();
+
+				var aName = new String(points[i][j].aObject).trim().toLowerCase();
+
+				console.log('compare',currentTaxName , strString);
+
+				if( (currentTaxName.indexOf(strString) != -1 || aName.indexOf(strString) != -1)){
+					if(j == 0){
+						byStreetArray.push({ 'aObject' : points[i][j].pTax.name , 'htmlPath': points[i][j].htmlPath});
+						//console.log('tax added',currentTaxName);
+					}
+					points[i][j].aObject = new String(points[i][j].aObject).trim();
+					byStreetArray.push(points[i][j]);
+
+				}//if
+
+			}//for j
+
+
+		}//for i
+
+		clear(resultList);
+		resultList.style.display = 'block';
+
+		byStreetArray.forEach(function (elem,index) {
+
+			if(elem.aObject.length > 0){
+
+				var newLi = document.createElement('li');
+				newLi.onclick = function () {
+					itemSelected(byStreetArray[index]);
+				}
+
+				newLi.innerText = elem.aObject;
+
+				resultList.appendChild(newLi);
+			}
+
+
+
+		});
+
+
+	}//inputStreet
+	
+	function getTaxByName(name){
+
+
+		for(var i = 0; i < points.length ; i++){
+
+			for(var j = 0; j < points[i].length ; j++){
+
+				var currentTaxName = new String(points[i][j].pTax.name).toLowerCase();
+
+				//console.log('compare',currentTaxName , strString);
+
+				if( currentTaxName == name.toLowerCase()) {
+					return points[i][j].pTax;
+				}//if
+
+			}//for j
+
+
+		}//for i
+
+		return null;
+
+	}
+	
+	function itemSelected(item){
+
+		var tax = null;
+		console.log('selected',item);
+		streetName.value = item.aObject;
+
+		if(item.id == undefined){
+
+			console.log('улица пришла');
+			tax = getTaxByName(item.aObject);
+
+			currentAddress.path = tax.description;
+		}//if
+		else{
+			console.log('объект пришел');
+			tax = item;
+
+			currentAddress.path = tax.htmlPath;
+		}//else
+
+		housesByStreet.length = 0
+		housesByStreetList.length = 0;
+
+		for(var i = 0; i < points.length ; i++){
+
+			for(var j = 0; j < points[i].length ; j++){
+
+				//  console.log('compare',tax);
+
+				if(parseInt(points[i][j].pTax.term_id) == parseInt(tax.term_id)){
+					var houses = new String(points[i][j].home);
+
+					var hString = houses.split(',');
+
+					for(var x = 0 ; x <  hString.length ; x++){
+
+						if(hString[x].trim().length > 0){
+							housesByStreet.push({ 'title' : hString[x]  , 'path':points[i][j].htmlPath } );
+							housesByStreetList.push({ 'title' : hString[x]  , 'path':points[i][j].htmlPath });
+
+							console.log('home pushed',hString[x]);
+						}
+
+
+
+					}//for x
+
+
+				}
+
+			}//for j
+
+		}//for i
+
+		clear(resultList);
+
+		if(housesByStreet.length != 0)
+			houseName.style.display = '';
+		else
+			houseName.style.display = 'none';
+
+		resultList.style.display = 'block';
+		goToPoint.style.display = '';
+
+		console.log('housesByStreet',housesByStreet);
+		housesByStreet.forEach(function (elem) {
+
+			var newLi = document.createElement('li');
+			newLi.innerText = elem.title;
+			newLi.onclick = function () {
+
+				houseSelected(elem);
+
+			}
+
+			resultList.appendChild(newLi);
+
+		})
+
+	};
+
+	function changeHouse(inputElement){
+
+		var rightHouse = new String(inputElement.value).trim();
+		housesByStreet.length = 0;
+
+		if(rightHouse.length == 0){
+			for(var i = 0; i < housesByStreetList.length; i++){
+				housesByStreet.push(housesByStreetList[i]);
+			}
+			return;
+		}//if
+
+		for(var i = 0; i < housesByStreetList.length; i++){
+
+			var leftHouse = new String(housesByStreetList[i].title).trim();
+			console.log('compare',rightHouse,leftHouse);
+
+			if(leftHouse.indexOf(rightHouse) != -1){
+				housesByStreet.push(housesByStreetList[i]);
+			}
+
+
+		}
+
+		clear(resultList);
+
+		housesByStreet.forEach(function (elem,index) {
+
+			var newLi = document.createElement('li');
+			newLi.innerText = elem.title;
+
+			newLi.onclick = function () {
+
+				houseSelected(elem);
+
+			}
+
+			resultList.appendChild(newLi);
+
+		})
+
+	}//$scope.changeHouseNumber
+
+	function houseSelected( address ){
+
+		console.log(address);
+		currentAddress = address;
+		houseName.value = address.title;
+		console.log(currentAddress);
+		goToPoint.style.display = '';
+		clear(resultList);
+
+	};
+
+	goToPoint.onclick = function () {
+		window.location.href  = currentAddress.path;
+	}
+
+</script>
+
+</html>

@@ -1,0 +1,167 @@
+
+<div class="col-xs-12 col-md-8"><!-- Левая основная колонка -->
+	<div class="content index">
+		<header class="row zr middle-xs">
+			<div class="head col-xs">
+				<div class="v-line"></div>
+				<h2>Новости</h2>
+			</div>
+			<div class="readmore col-xs">
+				<div class="read-t"><a ui-sref="news">Все новости</a>
+					<div class="all-arrows">
+						<div class="ar-line-g"></div>
+						<div class="ar-line-t"></div>
+						<div class="ar-line-b"></div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div ng-repeat="singleNews in news track by $index" class="row news animate-repeat">
+			<div class="col-xs-12 col-sx-4 col-sm-4 col-md-5">
+				<figure><img ng-src="{{singleNews.image}}" alt="Анадырь: +Заголовок новости"></figure>
+			</div>
+			<div class="col-xs-12 col-sx-8 col-sm-8 col-md-7">
+				<div class="box">
+					<header>
+						<h2 ng-bind="singleNews.title"></h2>
+					</header>
+					<div class="date" ng-bind="singleNews.date"></div>
+					<div class="text-news" ng-bind="singleNews.anonce"></div>
+					<footer class="row news-f">
+						<div class="social-ic col-xs"> <a href="#" class="laik">
+							<span class="laik-i icon-heart" ng-bind-template="Нравиться {{singleNews.likes}}"></span></a>
+							<a href="#" class="comment"><span class="comment-i icon-comment" ng-bind-template="Коментировать {{singleNews.comments.allCount}}"></span></a>
+						</div>
+						<div class="readmore col-xs">
+							<div class="read-t"><a ui-sref="single-news({ newsID: singleNews.id })">Подробнее</a>
+								<div class="all-arrows">
+									<div class="ar-line-g"></div>
+									<div class="ar-line-t"></div>
+									<div class="ar-line-b"></div>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+			</div>
+		</div>
+		<div class="row zr middle-xs">
+			<div class="line-gr"></div>
+			<div class="head col-xs"> &nbsp; </div>
+			<div class="readmore col-xs">
+				<div class="read-t"><a ui-sref="news">Все новости</a>
+					<div class="all-arrows">
+						<div class="ar-line-g"></div>
+						<div class="ar-line-t"></div>
+						<div class="ar-line-b"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cont-lenta">
+		<header class="row zr middle-xs">
+			<div class="head col-xs">
+				<div class="v-line"></div>
+				<h2>Лента</h2>
+			</div>
+			<div class="readmore col-xs">
+				<div class="read-t"><a ui-sref="tape">Вся лента</a>
+					<div class="all-arrows">
+						<div class="ar-line-g"></div>
+						<div class="ar-line-t"></div>
+						<div class="ar-line-b"></div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="row">
+			<div ng-repeat="singleTapePost in tape track by $index" class="block-lenta col-sm-6">
+				<div class="box">
+					<header>
+						<ul>
+							<li class="user-i">
+								<figure><a href="#"><img ng-src="{{singleTapePost.owner.image}}"></a></figure>
+							</li>
+							<li class="user-t"><a href="#" ng-bind-template="{{singleTapePost.owner.firstName}} {{singleTapePost.owner.lastName}}"></a>
+								<div ng-if="singleTapePost.time.days == 0 && singleTapePost.time.hours == 0" class="date" ng-bind-template="{{singleTapePost.time.minutes}} минут назад"></div>
+								<div ng-if="singleTapePost.time.days == 0 && singleTapePost.time.hours > 0" class="date" ng-bind-template="{{singleTapePost.time.hours}} часов назад"></div>
+								<div ng-if="singleTapePost.time.days == 0 && singleTapePost.time.hours == 0 && singleTapePost.time.minutes == 0" class="date">Только что</div>
+								<div ng-if="singleTapePost.time.days > 0" class="date" ng-bind="singleTapePost.date"></div>
+							</li>
+						</ul>
+					</header>
+					<div class="lenta-t">
+						<div class="anons" ng-bind="singleTapePost.description | descriptionFilter:singleTapePost.contentStrict"></div>
+						<div class="more-description" ng-click="singleTapePost.contentStrict =  singleTapePost.description.length" ng-if="singleTapePost.description.length > singleTapePost.contentStrict">Показать полностью...</div>
+
+						<div class="pr-img">
+							<figure><a href="#"><img ng-src="{{singleTapePost.newsPhotos[0].smallUrl}}"></a></figure>
+						</div>
+					</div>
+					<footer class="row news-f">
+						<div class="social-ic col-xs">
+							<a ng-click="addLike(singleTapePost)" href="#" class="laik">
+								<span class="laik-i icon-heart">Нравится</span>
+								<span class="count"  ng-bind="singleTapePost.likes" ></span>
+							</a>
+							<a href="#" class="comment">
+								<span class="comment-i icon-comment" >Коментировать</span>
+								<span class="count" ng-bind="singleTapePost.comments.allCount"></span>
+							</a>
+						</div>
+					</footer>
+				</div>
+			</div>
+		</div>
+		<div class="row zr middle-xs">
+			<div class="line-gr"></div>
+			<div class="head col-xs"> &nbsp; </div>
+			<div class="readmore col-xs">
+				<div class="read-t"><a ui-sref="tape">Вся лента</a>
+					<div class="all-arrows">
+						<div class="ar-line-g"></div>
+						<div class="ar-line-t"></div>
+						<div class="ar-line-b"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Конец Левая основная колонка -->
+<!--Правая  колонка -->
+<div class="col-xs-12 col-md-3 col-md-offset-1">
+	<div class="right">
+		<div class="row">
+			<!--Блок в правой колонке -->
+			<div class="block-r col-xs">
+				<header class="row zr middle-xs">
+					<div class="head col-xs">
+						<div class="v-line"></div>
+						<h2>Авиабилеты</h2>
+					</div>
+				</header>
+				<div class="cont-right-bl">
+					<figure><a href="#" class="rekl-link"><img src="img/r1.jpg"></a></figure>
+				</div>
+			</div>
+			<!--конец Блок в правой колонке -->
+			<!--Блок в правой колонке -->
+			<div class="block-r col-xs">
+				<header class="row zr middle-xs">
+					<div class="head col-xs">
+						<div class="v-line"></div>
+						<h2>Афиша</h2>
+					</div>
+				</header>
+				<div class="cont-right-bl">
+					<figure><a href="#" class="rekl-link"><img src="img/affors.jpg"></a></figure>
+				</div>
+			</div>
+			<!--конец Блок в правой колонке -->
+		</div>
+	</div>
+</div>
+<!--Правая  колонка -->
+

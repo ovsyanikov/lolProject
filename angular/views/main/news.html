@@ -1,0 +1,131 @@
+<div class="col-xs-12 col-md-8"><!-- Левая основная колонка -->
+    <div class="content index">
+        <div ng-repeat="singleNews in news" class="row news repeated-item">
+            <div class="col-xs-12 col-sx-4 col-sm-4 col-md-5">
+                <figure><img ng-src="{{singleNews.image}}" alt="Анадырь: +Заголовок новости"></figure>
+            </div>
+            <div class="col-xs-12 col-sx-8 col-sm-8 col-md-7">
+                <div class="box">
+                    <header>
+                        <h2 ng-bind="singleNews.title"></h2>
+                    </header>
+                    <div class="date" ng-bind="singleNews.date"></div>
+                    <div class="text-news" ng-bind="singleNews.anonce"></div>
+                    <footer class="row news-f">
+                        <div class="social-ic col-xs"> <a href="#" class="laik">
+                            <span class="laik-i icon-heart">Нравится</span></a>
+                            <a href="#" class="comment"><span class="comment-i icon-comment">Коментировать</span></a>
+                        </div>
+                        <div class="readmore col-xs">
+                            <div class="read-t"><a ui-sref="single-news({ newsID: singleNews.id })">Подробнее</a>
+                                <div class="all-arrows">
+                                    <div class="ar-line-g"></div>
+                                    <div class="ar-line-t"></div>
+                                    <div class="ar-line-b"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div ng-if="allPosts > 0" class="pagination">
+            <ul>
+                <li ng-if="allPosts > 1" ng-click="NextNews(0,1)"><a href="" class="icon-angle-double-left"></a></li>
+                <li ng-if="allPosts > 1" ng-click="NextNews(currentPage-postsPerPage,currentPage-1)"><a href="" class="icon-angle-left"></a></li>
+
+                <li ng-click="NextNews( (page-1) * postsPerPage , page)" ng-repeat="page in pages" href="" ><a ng-class="page == currentPage ? 'active' : ''" href=""  ng-bind="page"></a></li>
+                <li ng-if="pages.length > allPosts"><a href="#">&#133;</a></li>
+
+                <li ng-if="allPosts > 1" ng-click="NextNews(currentPage+postsPerPage,currentPage+1)"><a href="" class="icon-angle-right"></a></li>
+                <li ng-if="allPosts > 1" ng-click="NextNews(allPosts-postsPerPage,allPosts/postsPerPage)" ><a href="" class="icon-angle-double-right"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--Конец Левая основная колонка -->
+<!--Правая  колонка -->
+<aside class="col-xs-12 col-md-3 col-md-offset-1">
+
+    <!--Панель в правой колонке -->
+    <div class="panel-right">
+        <div class="open-arrow">
+            <button class="arrow icon-left-open-big"></button>
+        </div>
+        <div class="block-r">
+            <header class="row zr middle-xs">
+                <div class="head col-xs">
+                    <div class="v-line"></div>
+                    <h2>Разделы</h2>
+                </div>
+            </header>
+            <div class="cont-right-bl meny-r">
+                <ul>
+                    <li  ng-repeat="singleCategory in categories" ng-click="filterNews(singleCategory)"><a ng-class=" category != undefined && category.name == singleCategory.name ? 'active' :''" href=""><span ng-bind="singleCategory.name"></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--конец панель в правой колонке -->
+
+    <div class="right">
+        <div class="row">
+            <!--Блок в правой колонке -->
+            <div class="block-r col-xs">
+                <header class="row zr middle-xs">
+                    <div class="head col-xs">
+                        <div class="v-line"></div>
+                        <h2>3d Анадырь</h2>
+                    </div>
+                </header>
+                <div class="cont-right-bl">
+                    <figure><a href="http://3danadyr.ru/3/_html5/3.html" target="_blank" class="rekl-link"><img src="img/sidebar3.jpg"></a></figure>
+                </div>
+            </div>
+            <!--конец Блок в правой колонке -->
+            <!--Блок в правой колонке -->
+            <div class="block-r col-xs">
+                <header class="row zr middle-xs">
+                    <div class="head col-xs">
+                        <div class="v-line"></div>
+                        <h2>Авиабилеты</h2>
+                    </div>
+                </header>
+                <div class="cont-right-bl">
+                    <figure><a href="#" class="rekl-link"><img src="img/r1.jpg"></a></figure>
+                </div>
+            </div>
+            <!--конец Блок в правой колонке -->
+            <!--Блок в правой колонке -->
+            <div class="block-r col-xs">
+                <header class="row zr middle-xs">
+                    <div class="head col-xs">
+                        <div class="v-line"></div>
+                        <h2>Афиша</h2>
+                    </div>
+                </header>
+                <div class="cont-right-bl">
+                    <figure><a href="#" class="rekl-link"><img src="img/affors.jpg"></a></figure>
+                </div>
+            </div>
+            <!--конец Блок в правой колонке -->
+        </div>
+    </div>
+</aside>
+<!--Правая  колонка -->
+
+<script>
+
+    $(document).ready(function () {
+        $('.arrow').click(function(){
+            $('.panel-right').toggleClass('open');
+            $('.fon-all-white').toggleClass('open');
+        })
+        $('.fon-all-white').click(function(){
+            $('.panel-right').toggleClass('open');
+            $('.fon-all-white').toggleClass('open');
+        });
+    });
+
+
+</script>

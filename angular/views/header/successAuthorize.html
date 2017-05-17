@@ -1,0 +1,52 @@
+<!--<div class="box row in">-->
+    <!--<a href="#" class="user-login"><img ng-src="{{user.image}}"></a>-->
+    <!--<div class="log-block">-->
+        <!--<a ui-sref="account" class="user-log-text" ng-bind-template="{{user.firstName}} {{user.lastName}}"></a>-->
+        <!--<a href="#" class="icon-logout text-logout"><span ng-click="Logout()">Выйти</span></a>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="box row in"><a href="#" class="user-login"><img ng-src="{{user.image}}"></a>
+    <div class="log-block"><a href="#" class="user-log-text" ng-bind-template="{{user.firstName}} {{user.lastName}}"></a> <span class="m-down icon-down-dir"></span></div>
+</div>
+<div class="in-v">
+    <div class="vlo">
+        <span class="close fontello">&#xe806;</span>
+        <ul>
+            <li><a ui-sref="account"><span class="icon-home">Моя страница</span></a></li>
+            <li><a ui-sref="tape"><span class="icon-news">Лента</span></a></li>
+            <li ng-click="Logout()"><a href=""><span class="icon-logout">Выход</span></a></li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('a.login').click(function(){
+            $('.login-panel').toggleClass('active');
+            $('.reg-panel').removeClass('active');
+        })
+
+        $('.login-panel .close').click(function(){
+            $('.login-panel').removeClass('active');
+        })
+
+        $('.in').click(function(){
+            $('.in-v').toggleClass('active');
+        })
+        $('.in-v .close').click(function(){
+            $('.in-v').removeClass('active');
+        })
+
+        $('a.reg').click(function(){
+            $('.reg-panel').toggleClass('active');
+            $('.login-panel').removeClass('active');
+        })
+
+        $('.reg-panel .close').click(function(){
+            $('.reg-panel').removeClass('active');
+        })
+
+    })
+</script>

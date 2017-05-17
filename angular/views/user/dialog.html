@@ -1,0 +1,31 @@
+<div ng-controller="messageController">
+
+
+    <div style="padding: 10px;" >
+        <img style="border-radius: 50%;" ng-src="{{whom.image}}">
+        <div style="display: inline-block; padding: 20px;"><h3 ng-bind-template="{{whom.firstName}} {{whom.lastName}}"></h3></div>
+    </div>
+
+    <div style="background-color: rgb(210, 233, 255); padding: 5px; margin-bottom: 10px;">
+        <h4 ng-if="messages.length == 0" style="text-align: center">Диалог пуст</h4>
+        <p  ng-class="message.owner == 'me' ? 'myMessage' : 'frienMessage' " ng-repeat="message in messages" >
+
+            <span ng-if="message.owner == 'me'" ng-bind-template="(Я){{message.Message}}"></span>
+            <span ng-if="message.owner != 'me'" ng-bind-template="({{message.name}}){{message.Message}}"></span>
+
+        </p>
+    </div>
+
+    <!--<div ng-bind="userMessage" style="width: 96%; height: auto; background-color: white;padding: 10px; border-radius: 10px" contenteditable="true">-->
+
+    <!--</div>-->
+
+    <div>
+        <textarea ng-model="userMessage" style="width: 100%; border: 0px; height: 50px;" />
+    </div>
+    <div style="text-align: center; margin-top: 9px;" >
+        <div ng-click="SendMessage()" class="mdl-button mdl-js-button mdl-button--primary">Отправить</div>
+    </div>
+
+
+</div>

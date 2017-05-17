@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b88aa6c6-4dca-41c6-ba83-1352bcf02b4a" name="anadir" url="http://doom4.beget.com">
+        <fileTransfer host="doom4.beget.com" port="21" rootFolder="/3danadyr.ru/public_html">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,23 @@
+<!--Слайдеп -->
+<div class="box-slide">
+    <div class="cont-slider">
+        <div class="galleries" >
+            <div class="jR3DCarouselGallery">
+                <div ng-repeat="slide in slidersItems track by $index"  class="jR3DCarouselCustomSlide">
+
+                    <a ng-href="{{slide.path}}" target="_blank">
+                        <img ng-src="{{slide.image}}" />
+                    </a>
+                    <div class="captions">Описание слайда</div>
+
+                    <div ng-include="includeScripts($index,slidersItems.length)">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- конец слайдер -->
+
+

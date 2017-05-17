@@ -1,0 +1,93 @@
+<div class="my-col-i">
+    <div class="user-photo">
+        <figure><img ng-src="{{userProfile.image}}">
+            <a href="#" class="podpis">Подписаться</a>
+        </figure>
+    </div>
+</div>
+<div class="my-col-c">
+
+    <div class="cont-line">
+        <header class="row zr middle-xs">
+            <div class="head col-sx">
+                <div class="v-line"></div>
+                <h2 ng-bind-template="{{userProfile.firstName}} {{userProfile.lastName}}" >Пупкин Иван Сергеевич</h2>
+            </div>
+            <div class="col-sx dtm">
+                заходил сегодня в 1:11
+            </div>
+        </header>
+        <p class="status" ng-bind="userProfile.status"></p>
+    </div>
+
+    <div class="cont-info">
+        <div class="l-i">
+            <span class="lf">День рождения:</span>
+            <span ng-bind="userProfile.birthday">24 августа 1973 г.</span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Город:</span>
+            <span ng-bind="userProfile.city">Анадырь</span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Семейное положение:</span>
+            <span ng-bind="userProfile.fStatus">женат</span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Место работы:</span>
+            <span ng-bind="userProfile.job">Министерство лесов и полей</span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Мобильный телефон:</span>
+            <span ng-bind="userProfile.phone">8 800 968 2585</span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Скайп:</span>
+            <span ng-bind="userProfile.skype">newputin</span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Сайт:</span>
+            <span><a ng-href="userProfile.webSite" target="_blank" ng-bind="userProfile.webSite">pupkin.ru</a></span>
+        </div>
+    </div>
+
+    <div class="raz-cont-info"><span class="icon-down-open-big">Развернуть</span></div>
+
+    <div class="soc-stat">
+        <div class="st">
+            <a href="#">
+                <span class="st-nump">575</span>
+                <span class="st-op">друга</span>
+            </a>
+        </div>
+        <div class="st">
+            <a href="#">
+                <span class="st-nump" ng-bind="userProfile.subscribersCount"></span>
+                <span class="st-op">Подписчиков</span>
+            </a>
+        </div>
+        <div class="st">
+            <a href="#">
+                <span class="st-nump" ng-bind="wall.count"></span>
+                <span class="st-op">Постов</span>
+            </a>
+        </div>
+        <div class="st">
+            <a href="#">
+                <span class="st-nump">1755</span>
+                <span class="st-op">Фото</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('.raz-cont-info').click(function(){
+            $('.cont-info').toggleClass('open');
+            $('.icon-down-open-big').toggleClass('icon-up-open-big');
+        });
+
+    });
+</script>

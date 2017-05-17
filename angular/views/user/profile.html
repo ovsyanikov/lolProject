@@ -1,0 +1,114 @@
+<div class="my-col-i">
+    <div class="user-photo">
+        <figure><img ng-src="{{userProfile.image}}">
+
+        </figure>
+    </div>
+</div>
+<div class="my-col-c">
+
+    <div class="cont-line">
+        <header class="row zr middle-xs">
+            <div class="head col-sx">
+                <div class="v-line"></div>
+                <h2 ng-bind-template="{{userProfile.firstName}} {{userProfile.lastName}}" >Пупкин Иван Сергеевич</h2>
+            </div>
+            <div class="col-sx dtm">
+                заходил сегодня в 1:11
+            </div>
+        </header>
+        <p class="status" ng-bind="userProfile.status"></p>
+    </div>
+
+    <div class="cont-info">
+        <div class="l-i">
+            <span class="lf">Показывать личные данные:</span>
+            <span>
+						<select>
+						  <option selected>Всем</option>
+						  <option>Друзьям</option>
+						  <option>Ни кому</option>
+						</select>
+					</span>
+        </div>
+        <div class="l-i">
+            <span class="lf">День рождения:</span>
+            <span><input type="date" ng-model="userProfile.birthday.value" ng-change="birthdayChange(userProfile.birthday.value)" placeholder="дд.мм.гг" name="dt"></span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Город:</span>
+            <!--list="city"-->
+            <span><input ng-model="userProfile.city"  name="city" >
+						<!--<datalist id="city">-->
+							<!--<option>Анадырь</option>-->
+							<!--<option>Провидение</option>-->
+							<!--<option>Угольные копи</option>-->
+							<!--<option>Эгвекинот</option>-->
+					   <!--</datalist>-->
+					</span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Семейное положение:</span>
+            <span><input ng-model="userProfile.fStatus" type="text" value="женат" name="stat"></span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Место работы:</span>
+            <span><input type="text" ng-model="userProfile.job" value="Министерство лесов и полей" name="work"></span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Мобильный телефон:</span>
+            <span><input type="text" ng-model="userProfile.phone" name="phone"></span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Скайп:</span>
+            <span><input type="text" ng-model="userProfile.skype" value="poltiev" name="skype"></span>
+        </div>
+        <div class="l-i">
+            <span class="lf">Сайт:</span>
+            <span><a ng-href="http://{{userProfile.webSite}}" target="_blank" ng-bind="userProfile.webSite">pupkin.ru</a></span>
+        </div>
+
+        <div class="edit-l"><button ng-click="Save()"><span class="icon-floppy"></span>Сохранить изменения</button></div>
+
+    </div>
+
+    <div class="raz-cont-info"><span class="icon-down-open-big">Развернуть</span></div>
+
+    <div class="soc-stat">
+        <div class="st">
+            <a href="#">
+                <span class="st-nump">575</span>
+                <span class="st-op">друга</span>
+            </a>
+        </div>
+        <div class="st">
+            <a href="#">
+                <span class="st-nump" ng-bind="userProfile.subscribersCount"></span>
+                <span class="st-op">Подписчиков</span>
+            </a>
+        </div>
+        <div class="st">
+            <a href="#">
+                <span class="st-nump" ng-bind="wall.count"></span>
+                <span class="st-op">Постов</span>
+            </a>
+        </div>
+        <div class="st">
+            <a href="#">
+                <span class="st-nump">1755</span>
+                <span class="st-op">Фото</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('.raz-cont-info').click(function(){
+            $('.cont-info').toggleClass('open');
+            $('.icon-down-open-big').toggleClass('icon-up-open-big');
+        });
+
+    });
+</script>

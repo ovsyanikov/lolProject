@@ -1,0 +1,39 @@
+<script>
+
+    $(document).ready(function () {
+
+        console.log('script slider!');
+        var carouselProps1 =  {
+            width: 573, 				/* largest allowed width */
+            height: 488, 				/* largest allowed height */
+            slideLayout : 'cover',     /* "contain" (fit according to aspect ratio), "fill" (stretches object to fill) and "cover" (overflows box but maintains ratio) */
+            animation: 'slide3D', 		/* slide | scroll | fade | zoomInSlide | zoomInScroll */
+            animationCurve: 'ease',
+            animationDuration: 1700,
+            animationInterval: 3000,
+            slideClass: 'jR3DCarouselCustomSlide',
+            autoplay: false,
+            onSlideShow: show,		/* callback when Slide show event occurs */
+            navigation: 'circles'	/* circles | squares */,
+            perspective: 1300
+
+        }
+
+        function setUp(){
+            jR3DCarousel = $('.jR3DCarouselGallery').eq(0).jR3DCarousel(carouselProps1);
+
+        }
+        function show(slide){
+            //console.log("Slide shown: ", slide.find('img').attr('src'))
+        }
+
+        //carouselProps.slides = getSlides(7);
+        setUp();
+
+        jR3DCarousel1 = $('.jR3DCarouselGallery').eq(1).jR3DCarousel(carouselProps1);
+
+    });
+
+
+
+</script>

@@ -1,0 +1,46 @@
+<div class="box row"><a href="javascript:void(0);" onClick="return(false)" class="login col-xs"><span class="fontello">&#xe802;</span><span class="login-text log-in">Войти</span></a><a href="javascript:void(0);" onClick="return(false)" class="reg col-xs"><span></span><span class="login-text reg-in">Регистрация</span></a></div>
+<div class="login-panel"> <span class="close fontello">&#xe806;</span>
+    <input ng-model="user.login" class="r-form" type="text" placeholder="Логин">
+    <input ng-keypress="AuthKeyPress($event)" ng-model="user.password" class="r-form" type="password" placeholder="Пароль">
+    <input ng-click="Authorize()" type="button" class="boton" value="Войти">
+</div>
+<div class="reg-panel"> <span class="close fontello">&#xe806;</span>
+    <input ng-model="user.login" class="r-form" type="text" placeholder="Login*">
+    <input ng-model="user.email"  class="r-form" type="text" placeholder="E-mail*">
+    <input ng-model="user.firstName" class="r-form" type="text" placeholder="Имя*">
+    <input ng-model="user.lastName" class="r-form" type="text" placeholder="Фамилия*">
+    <input ng-model="user.password" class="r-form" type="password" placeholder="Пароль">
+    <input ng-model="user.confirmPassword" class="r-form" type="password" placeholder="Подтвердите пароль">
+    <input ng-click="Register()" type="submit" class="boton" value="Зарегестрироваться">
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('a.login').click(function(){
+            $('.login-panel').toggleClass('active');
+            $('.reg-panel').removeClass('active');
+        })
+
+        $('.login-panel .close').click(function(){
+            $('.login-panel').removeClass('active');
+        })
+
+        $('.in').click(function(){
+            $('.in-v').toggleClass('active');
+        })
+        $('.in-v .close').click(function(){
+            $('.in-v').removeClass('active');
+        })
+
+        $('a.reg').click(function(){
+            $('.reg-panel').toggleClass('active');
+            $('.login-panel').removeClass('active');
+        })
+
+        $('.reg-panel .close').click(function(){
+            $('.reg-panel').removeClass('active');
+        })
+
+    })
+</script>

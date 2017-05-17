@@ -1,0 +1,62 @@
+<div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card-image">
+        <img src="{{cnews.image}}" alt="">
+    </div>
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text" ng-bind="cnews.title"></h2>
+    </div>
+    <div class="mdl-card__supporting-text" ng-bind="cnews.anonce">
+
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+        <a ng-if="cnews.type == 'anews'" ui-sref="single-news({newsID:cnews.id, value: cnews })" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            Подробнее
+        </a>
+
+        <a ng-if="cnews.type == 'culturelife'" ui-sref="single-culture({ cultureID: cnews.id })" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            Подробнее
+        </a>
+
+        <a ng-if="cnews.type == 'organizations'" ui-sref="single-organization({ orgID: cnews.id })" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            Подробнее
+        </a>
+
+        <a ng-if="cnews.type == 'organizations'" ng-click="toggleContacts(cnews)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            Контакты
+        </a>
+        <!--<div  ng-class="cnews.isShowContacts ? 'active-contacts' : '' " class="organization-cart">-->
+        <!--<div></div>-->
+
+        <div ng-if="cnews.type == 'organizations'" ng-class="cnews.isShowContacts ? 'active-contacts' : '' " class="organization-cart">
+            <button ng-click="cnews.isShowContacts = false" class="mdl-button mdl-js-button mdl-button--icon close-form">
+                <i class="material-icons"></i>
+            </button>
+            <div ng-repeat="phone in cnews.phones" ng-show="phone.length > 0">Телефон: <span>{{phone}}</span></div>
+            <div>Факс: <span>{{cnews.Fax}}</span></div>
+            <div>Viber: <span>{{cnews.Viber}}</span></div>
+            <div>Skype: <span>{{cnews.Skype}}</span></div>
+            <div>WhatsApp: <span>{{cnews.WhatsApp}}</span></div>
+            <div>E-mail: <span>{{cnews.email}}</span></div>
+            <div>Адрес сайта: <span>{{cnews.siteURL}}</span></div>
+            <div>Адрес : <span>{{cnews.address}}</span></div>
+            <div>Адрес точки:<a href="{{cnews.addressPoint}}" >Перейти</a></div>
+            <div>Контактное лицо :  <span>{{cnews.contactFace}} </span></div>
+            <div>Руководитель: <span>{{cnews.contactFaceFIO}}</span></div>
+
+
+
+        </div>
+
+    </div>
+    <div class="mdl-card__menu">
+        <button id="news{{cnews.id}}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+            <i class="material-icons">share</i>
+        </button>
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+            for="news{{cnews.id}}">
+            <li class="mdl-menu__item">На мою страницу</li>
+            <li disabled class="mdl-menu__item">В мои новости</li>
+            <li class="mdl-menu__item">Пометить как важное</li>
+        </ul>
+    </div>
+</div>

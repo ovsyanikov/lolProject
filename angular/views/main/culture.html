@@ -1,0 +1,73 @@
+<div class="page-content ">
+    <section class="content">
+        <div class="row news-page">
+            <section class="news col-xs-12 col-md-10 col-md-offset-1 mdl-color--white mdl-shadow--2dp">
+                <article class="mdl-color--primary">
+                    <header>
+                        <h3 class="mdl-typography--text-center mdl-typography--text-uppercase
+                              mdl-color-text--white">Культурная жизнь
+                        </h3>
+                    </header>
+                </article>
+
+                <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                    <div class="mdl-tabs__tab-bar">
+                        <a ng-repeat="category in cCategories" ng-click="changeCategory(category)" ng-class="( category.term_id == currentCultureCategory ? 'news-menu-is-active' : '' )" class="mdl-tabs__tab" ng-bind="category.name"></a>
+                    </div>
+
+                    <div class="mdl-tabs__panel is-active" id="politics">
+                        <div class="row news-dump start-xs">
+                            <div  ng-repeat="culture in culturesArray | categoryFilter:currentCultureCategory as filtered" newsitemlist cnews="culture"  class="col-xs-12 col-md-6 col-lg-3">
+
+                            </div>
+                            <div ng-if="filtered.length == 0" class="row center-xs" style="padding-bottom: 25px;">
+                                <h3>Записей в данном разделе не обнаружено...</h3>
+                            </div>
+                        </div>
+                        <div class="row center-xs" style="padding-bottom: 25px;">
+                            <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+            </section>
+        </div>
+
+        <aside class="mdl-color--grey-900">
+            <nav class="row center-lg user-menu mdl-color--grey-900">
+                <div id="user" class="user-menu-item">
+                    <a href="#"></a>
+                    <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="user">
+                        Страница
+                    </div>
+                </div>
+                <div id="friends"  class="user-menu-item">
+                    <a href="#" class="showFriends"></a>
+                    <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="friends">
+                        Друзья
+                    </div>
+                </div>
+                <div  class="user-menu-item" id="mess">
+                    <a href="#" data-badge="15" class="mdl-badge mdl-badge--overlap showMess">
+                    </a>
+                    <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="mess">
+                        Сообщения
+                    </div>
+                </div >
+                <div  class="user-menu-item" id="set">
+                    <a href="#"></a>
+                    <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="set">
+                        Натройки
+                    </div>
+                </div>
+            </nav>
+        </aside>
+    </section>
+</div>
+<script src="node_modules/material-design-lite/material.min.js"></script>
+<script src="js/app.js"></script>

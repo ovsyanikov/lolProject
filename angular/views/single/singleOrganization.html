@@ -1,0 +1,108 @@
+<div ng-if="!errorNotFound" class="col-xs-12 col-md-8"><!-- Левая основная колонка -->
+    <div class="content index">
+        <div class="row">
+            <div class="col-xs-12 cart-org">
+                <div class="box">
+
+                    <h1 ng-bind="organization.title"></h1>
+                    <div class="row">
+                        <div class="col-xs-12 col-sx-6">
+                            <figure><a href="#"><img ng-src="{{organization.image}}"></a></figure>
+                        </div>
+                        <div class="col-xs-12 col-sx-6 podrobn">
+                            <div class="cont-org">
+                                <div ng-if="organization.phones.length > 0" class="l-adr" ng-repeat="phone in organization.phones"> <span class="icon-adr icon-phone-circled"></span><span class="text-adr" title="Телефон" ng-bind="phone"></span> </div>
+
+                                <div ng-if="organization.Fax.length > 0" class="l-adr"> <span class="icon-adr icon-fax"></span><span class="text-adr" title="Факс" ng-bind="organization.Fax"></span> </div>
+                                <div ng-if="organization.email.length > 0" class="l-adr"> <span class="icon-adr icon-email"></span><span class="text-adr" title="E-mail" ng-bind="organization.email"></span> </div>
+                                <div  ng-if="organization.Skype.length > 0" class="l-adr"> <span class="icon-adr icon-skype"></span><span class="text-adr" title="Skype" ng-bind="organization.Skype"></span> </div>
+                                <div ng-if="organization.Skype.siteURL > 0" class="l-adr"> <span class="icon-adr icon-globe"></span><span class="text-adr" title="Сайт"><a ng-href="{{organization.siteURL}}" target="_blank" ng-bind="organization.siteURL"></a></span> </div>
+                                <div ng-if="organization.vkURL.length > 0" class="l-adr"> <span class="icon-adr icon-vkontakte"></span><span class="text-adr" title="В контакте"><a ng-href="{{organization.vkURL}}" target="_blank" ng-bind="organization.vkURL"></a></span> </div>
+                                <div ng-if="organization.okURL.length > 0" class="l-adr"> <span class="icon-adr icon-odnoklassniki-rect"></span><span class="text-adr" title="Одноклассники"><a ng-href="{{organization.okURL}}" target="_blank" ng-bind="organization.okURL"></a></span> </div>
+                                <div ng-if="organization.facebookURL.length > 0" class="l-adr"> <span class="icon-adr icon-facebook-rect"></span><span class="text-adr" title="facebook"><a ng-href="{{organization.facebookURL}}" target="_blank" ng-bind="organization.facebookURL"></a></span> </div>
+                                <div ng-if="organization.twitterURL.length > 0" class="l-adr"> <span class="icon-adr  icon-twitter-squared"></span><span class="text-adr" title="Twitter"><a ng-href="{{organization.twitterURL}}" target="_blank" ng-bind="organization.twitterURL"></a></span> </div>
+                                <div ng-if="organization.instagramURL.length > 0" class="l-adr"> <span class="icon-adr icon-instagram-filled"></span><span class="text-adr" title="Instagram"><a ng-href="{{organization.instagramURL}}" target="_blank" ng-bind="organization.instagramURL" ></a></span> </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 podrobn-2">
+                            <div class="l-adr">
+                                <span class="icon-adr icon-address-card"></span><span class="text-adr" title="Адрес " ng-bind="organization.address"></span>
+                            </div>
+                            <div class="l-adr icon-doc-text-inv">
+                                <span class="icon-adr"></span><span class="text-adr" title="Описание" ng-bind-html="organization.description">
+
+								</span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Конец Левая основная колонка -->
+<!--Правая  колонка -->
+<aside ng-if="!errorNotFound" class="col-xs-12 col-md-3 col-md-offset-1">
+
+    <!--Панель в правой колонке -->
+    <div class="panel-right">
+        <div class="open-arrow">
+            <button class="arrow icon-left-open-big"></button>
+        </div>
+        <div class="block-r">
+            <header class="row zr middle-xs">
+                <div class="head col-xs">
+                    <div class="v-line"></div>
+                    <h2>Разделы</h2>
+                </div>
+            </header>
+            <div class="cont-right-bl meny-r">
+                <ul>
+
+                    <li  ng-repeat="singleCategory in organizationsCategories">
+                        <a ng-class="parentCategory == singleCategory.term_id ? 'active' :''" href="">
+                            <span ng-bind="singleCategory.name"></span>
+                        </a>
+                        <ul>
+                            <li  ng-repeat="subCategory in singleCategory.subCats">
+                                <a ng-class="childCategory == subCategory.term_id ? 'active' :''" href="" >
+                                    <span ng-bind-template="{{subCategory.name}}({{subCategory.count}}) "></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div ng-include="includeScriptsAcordion($index,organizationsCategories.length)">
+
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="block-r">
+            <header class="row zr middle-xs">
+                <div class="head col-xs">
+                    <div class="v-line"></div>
+                    <h2>Кабинет</h2>
+                </div>
+            </header>
+            <div class="cont-right-bl meny-r">
+                <ul>
+                    <li><a ui-sref="account"><span>Моя страница</span></a></li>
+                    <li><a href="#"><span>Моя лента</span></a></li>
+                    <li><a href="#"><span>Закладки</span></a></li>
+                    <li><a href="#"><span>Сообщения</span></a></li>
+                    <li><a href="#"><span>Друзья</span></a></li>
+                    <li><a href="#"><span>Фотографии</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--конец панель в правой колонке -->
+</aside>
+<!--Правая  колонка -->
+
+
+
+<h1 ng-if="errorNotFound">Организация не найдена!</h1>

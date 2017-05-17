@@ -1,0 +1,16 @@
+<div class="col-xs-6 col-sm-4 last-news-item--img">
+    <figure>
+        <img src="{{cnews.image}}" alt="">
+    </figure>
+</div>
+<div class="col-xs-6 col-sm-8 last-news-item--text">
+    <article>
+        <header class="last-news-h">
+            <span class="date" ng-bind="cnews.date"></span>
+           <h3 ng-bind="cnews.title"></h3>
+        </header>
+		 <h4 ng-bind="cnews.anonce"></h4>
+        <a ng-if="cnews.type == 'anews'" ui-sref="single-news({ newsID: cnews.id })" class="mdl-color-text--grey-700">Подробнее</a>
+        <a ng-if="cnews.type == 'culturelife'" ui-sref="single-culture({ cultureID: cnews.id , value: cnews})" class="mdl-color-text--grey-700">Подробнее</a>
+    </article>
+</div>
