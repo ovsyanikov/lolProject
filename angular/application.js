@@ -134,19 +134,6 @@ function GetApplicationConfig($stateProvider,$urlRouterProvider,$locationProvide
 
                         });
 
-                        newsService.getSlider().then(function (sliderItems) {
-
-                            $scope.$parent.slidersItems.splice(0,$scope.$parent.slidersItems.length);
-
-                            [].forEach.call(sliderItems.posts,function (elem,index) {
-
-                                $scope.$parent.slidersItems.push(elem);
-
-                            });
-
-                            console.log('slidersItems',$scope.slidersItems );
-                        });
-
                         $scope.addLike = function (post) {
 
                             newsService.addLike($scope.user,post.id).then(function (response) {

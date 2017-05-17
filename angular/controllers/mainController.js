@@ -441,6 +441,8 @@ function mainController($scope,$state,$rootScope,newsService,userService,formVal
     }
 
 
+
+
     $scope.includeScripts = function(index,length){
 
         if( index == length-1 ){
@@ -475,6 +477,17 @@ function mainController($scope,$state,$rootScope,newsService,userService,formVal
     });
 
     $scope.slidersItems = [];
+
+    newsService.getSlider().then(function (sliderItems) {
+
+        [].forEach.call(sliderItems.posts,function (elem,index) {
+
+            $scope.slidersItems.push(elem);
+
+        });
+
+        console.log('slidersItems',$scope.slidersItems );
+    });
 
     $scope.date = new Date();
 
