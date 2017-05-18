@@ -1037,6 +1037,12 @@ function GetApplicationConfig($stateProvider,$urlRouterProvider,$locationProvide
                         }
 
                         $scope.userProfile = user.user;
+                        $scope.userProfile.birthday = new Date($scope.userProfile.birthday.value);
+                        $scope.userProfile.birthday =
+                            $scope.userProfile.birthday.getDate() +
+                            '.' + $scope.userProfile.birthday.getMonth() +
+                            '.' + $scope.userProfile.birthday.getYear()   ;
+                        
                         console.log('user',$scope.userProfile);
 
                         $scope.isFriend = $scope.userProfile.isFriend;
