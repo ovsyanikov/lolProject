@@ -1037,11 +1037,25 @@ function GetApplicationConfig($stateProvider,$urlRouterProvider,$locationProvide
                         }
 
                         $scope.userProfile = user.user;
-                        $scope.userProfile.birthday = new Date($scope.userProfile.birthday.value);
-                        $scope.userProfile.birthday =
-                            $scope.userProfile.birthday.getDate() +
-                            '.' + $scope.userProfile.birthday.getMonth() +
-                            '.' + $scope.userProfile.birthday.getYear()   ;
+                        // var bDate = new Date($scope.userProfile.birthday);
+                        //
+                        // $scope.userProfile.birthdayStr =
+                        //     bDate.getDate() +
+                        //     '.' + (bDate.getMonth() + 1) +
+                        //     '.' + bDate.getFullYear()   ;
+
+                        $scope.userProfile.birthdayStr = new Date();
+
+                        $scope.userProfile.birthdayStr = $scope.userProfile.birthdayStr.toLocaleString('ru', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            weekday: 'long',
+                            timezone: 'UTC',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            second: 'numeric'
+                        }).split('.')[0].toUpperCase();
                         
                         console.log('user',$scope.userProfile);
 
