@@ -65,7 +65,8 @@
         </div>
         <div class="l-i">
             <span class="lf">Сайт:</span>
-            <span><a ng-href="http://{{userProfile.webSite}}" target="_blank" ng-bind="userProfile.webSite">pupkin.ru</a></span>
+            <span><input type="text" ng-model="userProfile.webSite" name="site"></span>
+            <!--<span><a ng-href="{{}}" target="_blank" ng-bind="userProfile.webSite">pupkin.ru</a></span>-->
         </div>
 
         <div class="edit-l"><button ng-click="Save()"><span class="icon-floppy"></span>Сохранить изменения</button></div>

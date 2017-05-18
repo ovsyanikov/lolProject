@@ -30552,6 +30552,9 @@ function GetApplicationConfig($stateProvider,$urlRouterProvider,$locationProvide
 
                         $scope.userProfile = user.user;
 
+                        if($scope.userProfile.webSite.indexOf('http') == -1 && $scope.userProfile.webSite.indexOf('https') == -1)
+                            $scope.userProfile.webSite = 'http://' + $scope.userProfile.webSite;
+
                         $scope.newPosts = [];
 
                         $scope.userProfile.birthday = {
@@ -30807,7 +30810,7 @@ function GetApplicationConfig($stateProvider,$urlRouterProvider,$locationProvide
                         //     '.' + (bDate.getMonth() + 1) +
                         //     '.' + bDate.getFullYear()   ;
 
-                        $scope.userProfile.birthdayStr = new Date();
+                        $scope.userProfile.birthdayStr = new Date($scope.userProfile.birthday);
 
                         $scope.userProfile.birthdayStr = $scope.userProfile.birthdayStr.toLocaleString('ru', {
                             year: 'numeric',
@@ -30819,7 +30822,7 @@ function GetApplicationConfig($stateProvider,$urlRouterProvider,$locationProvide
                             minute: 'numeric',
                             second: 'numeric'
                         }).split('.')[0].toUpperCase();
-                        
+
                         console.log('user',$scope.userProfile);
 
                         $scope.isFriend = $scope.userProfile.isFriend;
